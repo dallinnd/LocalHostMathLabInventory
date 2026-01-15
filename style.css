@@ -1,0 +1,384 @@
+:root {
+    /* Modern Navy & Royal Palette */
+    --primary: #0f172a;      /* Deep Navy (Sidebar) */
+    --accent: #2563eb;       /* Royal Blue (Buttons/Highlights) */
+    --accent-hover: #1d4ed8; 
+    --bg: #f1f5f9;           /* Light Blue-Grey (Background) */
+    --card-bg: #ffffff;      /* White (Cards) */
+    --text-main: #334155;    /* Slate Grey (Text) */
+    --green: #10b981;        /* Success */
+    --red: #ef4444;          /* Danger */
+    --border: #cbd5e1;       
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar - Fixed & Open */
+.sidebar {
+    width: 240px; /* Fixed width, no longer shrinking */
+    background-color: var(--primary);
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0 10px;
+}
+
+.menu-items button {
+    background: transparent;
+    border: none;
+    color: #94a3b8; /* Muted text */
+    padding: 15px 20px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.menu-items button:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    margin-left: 240px; /* Matches sidebar width */
+    padding: 40px;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.page {
+    display: none;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadein 0.3s ease-out;
+}
+
+.page.active { display: block; }
+
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: 10px; /* Adjusted to 10px as requested */
+    margin-bottom: 20px;
+}
+
+/* Dashboard Grid */
+.warning-banner {
+    background-color: #fff7ed;
+    color: #c2410c;
+    padding: 15px;
+    border-radius: var(--radius);
+    margin-bottom: 30px;
+    border-left: 5px solid #f97316;
+    font-size: 0.9rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.dashboard-grid button {
+    padding: 40px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    background: var(--card-bg);
+    color: var(--primary);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border);
+}
+
+.dashboard-grid button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Forms */
+label { display: block; margin-top: 20px; margin-bottom: 8px; font-weight: 600; color: var(--primary); }
+input {
+    width: 100%; padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+input:focus { outline: none; border-color: var(--accent); background: white; }
+
+.btn-primary {
+    margin-top: 30px; padding: 14px;
+    background-color: var(--accent);
+    color: white; border: none; border-radius: 10px;
+    cursor: pointer; width: 100%; font-size: 1rem; font-weight: bold;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+.btn-primary:hover { background-color: var(--accent-hover); }
+
+/* Utility Buttons */
+.btn-green {
+    background-color: var(--green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    
+    /* User specific adjustments */
+    padding-top: 10px;
+    border-top-width: 10px;
+    margin-top: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 10px;
+}
+.btn-secondary { background-color: #64748b; color: white; border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
+.btn-delete { background-color: transparent; color: var(--red); border: 1px solid var(--red); padding: 10px; width: 100%; border-radius: 10px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+.btn-delete:hover { background-color: var(--red); color: white; }
+
+/* Back Button (in Search Popup) */
+.btn-back {
+    /* Match geometry of btn-green */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    
+    /* New Colors: White with Black Outline */
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    
+    /* Spacing */
+    margin-right: 15px;
+}
+
+/* Cancel Button (in Quick Add Popup) */
+.btn-text {
+    /* Match geometry of btn-green */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%; /* Full width to match the Save button above it */
+    
+    /* New Colors: White with Black Outline */
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    
+    /* Specific requirement: 10px margin top */
+    margin-top: 10px;
+}
+
+/* Hover effects for both (Optional but nice) */
+.btn-back:hover, .btn-text:hover {
+    background-color: #f1f5f9; /* Very light grey on hover */
+}
+
+/* Lists */
+.list-container { margin-top: 20px; }
+.list-item {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.1s;
+}
+.list-item:hover { border-color: var(--accent); background: #f8fafc; }
+
+/* Modals */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6); /* Darker overlay */
+    backdrop-filter: blur(1px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 200;
+}
+.modal.hidden { display: none; }
+.modal-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 25px;
+    width: 90%; max-width: 500px;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+/* Larger Close X */
+.close-modal {
+    float: right;
+    font-size: 40px; /* Increased from 28px */
+    font-weight: bold;
+    color: #64748b;
+    cursor: pointer;
+    line-height: 20px;
+    margin-top: -10px; /* Adjust alignment */
+}
+.close-modal:hover { color: var(--red); }
+
+/* Checkout Pills */
+.checkout-item-pill {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #f1f5f9;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    Margin-top: 8px;
+    border: 1px solid var(--border);
+}
+.btn-remove {
+    background: #fee2e2; color: var(--red);
+    border: none; width: 28px; height: 28px;
+    border-radius: 10px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-weight: bold;
+}
+.btn-remove:hover { background: var(--red); color: white; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar { width: 70px; padding-top: 10px; }
+    .sidebar button { font-size: 0; text-align: center; padding: 20px 0; }
+    .sidebar button::before { content: '●'; font-size: 20px; color: #94a3b8; }
+    main { margin-left: 70px; padding: 20px; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* Update this section */
+.list-item {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    /* Flexbox setup */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    transition: background 0.1s;
+}
+.list-item:hover { border-color: var(--accent); background: #f8fafc; }
+
+/* Container for the 3 buttons side-by-side */
+.list-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0; /* Prevents buttons from squishing */
+    margin-left: 10px;
+}
+
+/* Button Colors */
+.btn-view {
+    background-color: var(--green);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-edit-list {
+    background-color: #f59e0b; /* Amber/Yellow */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-delete-list {
+    background-color: var(--red);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* --- Add this to your style.css --- */
+
+/* Data Management Section */
+.data-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.btn-data {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: white;
+    transition: transform 0.2s;
+    min-width: 150px;
+}
+
+.btn-data:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-data.download {
+    background-color: #7c3aed; /* Purple */
+}
+
+.btn-data.upload {
+    background-color: #0891b2; /* Cyan/Teal */
+}
