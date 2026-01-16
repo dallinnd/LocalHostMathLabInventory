@@ -16,16 +16,36 @@ const app = {
         };
     },
 
-    loadData: () => {
-        const s = localStorage.getItem('mathLabStudents');
-        const i = localStorage.getItem('mathLabItems');
-        if (s) app.data.students = JSON.parse(s);
-        if (i) app.data.items = JSON.parse(i);
+    // REPLACEMENT: Load from Python Server
+    loadData: async () => {
+        try {
+            const response = await fetch('/api/data');
+            const json = await response.json();
+            if (json) {
+                app.data = json;
+                // Force a re-render after data loads
+                if(document.getElementById('page-students').classList.contains('active')) app.renderStudents();
+                if(document.getElementById('page-items').classList.contains('active')) app.renderItems();
+            }
+        } catch (error) {
+            console.error("Could not load from server. Is server.py running?", error);
+            // Fallback to local if server fails, or show alert
+            alert("Error: Could not connect to the local server.");
+        }
     },
 
-    saveData: () => {
-        localStorage.setItem('mathLabStudents', JSON.stringify(app.data.students));
-        localStorage.setItem('mathLabItems', JSON.stringify(app.data.items));
+    // REPLACEMENT: Save to Python Server
+    saveData: async () => {
+        try {
+            await fetch('/api/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(app.data)
+            });
+        } catch (error) {
+            console.error("Save failed", error);
+            alert("Error: Data could not be saved to the server.");
+        }
     },
 
     // --- IMPORT / EXPORT LOGIC ---
